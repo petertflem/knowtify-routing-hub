@@ -1,10 +1,15 @@
-var WebSocketServer = require('ws').Server
-  , wss = new WebSocketServer({ port: 3000 });
+var WebSocketServer = require("ws").Server;
+var port = process.env.PORT || 5000;
+var server = require("http").createServer(function(){});
 
-wss.on('connection', function connection(ws) {
-  ws.on('message', function incoming(message) {
-    console.log('received: %s', message);
+server.listen(port);
+
+var wss = new WebSocketServer({ server: server });
+
+wss.on('connection', function (ws) {
+  console.log('client connected');
+
+  ws.on('close', function () {
+    console.log('connection closed');
   });
-
-  ws.send('something');
 });

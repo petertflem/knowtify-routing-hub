@@ -5,6 +5,9 @@
   "main": "index.js",
   "author": "Peter Tollnes Flem",
   "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  }
   "dependencies": {
     "ws": "^0.7.2"
   }
