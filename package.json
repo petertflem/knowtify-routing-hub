@@ -6,7 +6,7 @@
   "author": "Peter Tollnes Flem",
   "license": "MIT",
   "scripts": {
-    "start": "node router/app.js"
+    "start": "node app/app.js"
   },
   "dependencies": {
     "express": "^4.13.1",

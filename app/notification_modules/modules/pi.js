@@ -1,6 +1,6 @@
 var WebSocketServer = require("ws").Server;
 
-module.exports.initialize = function (httpServer) {
+module.exports = function (httpServer) {
   var wss = new WebSocketServer({ server: httpServer });
 
   wss.on('connection', function (ws) {
