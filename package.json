@@ -1,0 +1,11 @@
+{
+  "name": "routing-hub",
+  "version": "1.0.0",
+  "description": "The routing component of the system",
+  "main": "index.js",
+  "author": "Peter Tollnes Flem",
+  "license": "MIT",
+  "dependencies": {
+    "ws": "^0.7.2"
+  }
+}
