@@ -16,6 +16,10 @@ module.exports.initialize = function (httpServer) {
     ws.on('close', function () {
       console.log('connection closed');
     });
+
+    ws.on('message',function (data) {
+      console.log('MESSAGE:' + data);
+    });
   });
 };
 
