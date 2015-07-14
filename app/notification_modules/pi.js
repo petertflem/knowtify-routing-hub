@@ -1,5 +1,5 @@
 var WebSocketServer = require("ws").Server;
-var webSocket = {};
+var connections = [];
 
 module.exports.initialize = function (httpServer) {
   var wss = new WebSocketServer({ server: httpServer });
@@ -7,7 +7,11 @@ module.exports.initialize = function (httpServer) {
   wss.on('connection', function (ws) {
     console.log('client connected');
 
-    webSocket = ws;
+    connections.push(ws);
+
+    ws.on('ping', function () {
+      console.log('ping');
+    });
 
     ws.on('close', function () {
       console.log('connection closed');
@@ -16,5 +20,7 @@ module.exports.initialize = function (httpServer) {
 };
 
 module.exports.pipe = function(data) {
-  webSocket.send(data);
+  connections.forEach(function (connection) {
+    connection.send(data);
+  });
 }
