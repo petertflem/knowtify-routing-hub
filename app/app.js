@@ -3,10 +3,10 @@ var app = express();
 var port = process.env.PORT || 5000;
 var server = require("http").createServer(app);
 
-// Initialize routing module
-require('./router/router').initialize(app, server);
+// Initialize module router
+require('./module-router/module-router').initialize(app, server);
 
 // Initialize global routes
-require('./config/routes.js').initialize(app);
+require('./app_config/routes.js').initialize(app);
 
 server.listen(port);

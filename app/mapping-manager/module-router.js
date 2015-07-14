@@ -1,8 +1,9 @@
 var fs = require('fs');
-var mapping = require('./config/mapping');
+var util = require('../util/util');
+var mapping = require('./config/input-to-notification-map');
 
 // Map of available notification modules
-var notificationModules = { };
+var availableNotificationModules = { };
 
 module.exports.initialize = function (app, httpServer) {
 
@@ -13,16 +14,16 @@ module.exports.initialize = function (app, httpServer) {
 };
 
 function mapInputToNotification(moduleName, data) {
-  var destinationModules = mapping[moduleName];
-  destinationModules.split(',').forEach(function (module) {
-    notificationModules[module].pipe(data);
+  var destinationNotificationModules = mapping[moduleName];
+  destinationNotificationModules.split(',').forEach(function (module) {
+    availableNotificationModules[module].pipe(data);
   });
 }
 
 function initializeInputModules (app) {
   fs.readdirSync('app/input_modules/').forEach(function (file) {
     var moduleName = file.replace('.js', '');
-    var callback = curry(mapInputToNotification, moduleName);
+    var callback = util.curry(mapInputToNotification, moduleName);
 
     require('../input_modules/' + moduleName).initialize(callback, app);
   });
@@ -35,13 +36,6 @@ function initializeNotificationModules (httpServer) {
     var module = require('../notification_modules/' + moduleName);
     module.initialize(httpServer);
 
-    notificationModules[moduleName] = module;
+    availableNotificationModules[moduleName] = module;
   });
-}
-
-function curry (fn) {
-  var args =  [].slice.call(arguments, 1);
-  return function() {
-    return fn.apply(this, args.concat([].slice.call(arguments)));
-  }
 }
