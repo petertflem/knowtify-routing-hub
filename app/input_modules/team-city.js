@@ -1,5 +1,5 @@
 module.exports.initialize = function (callback, app) {
-  app.get('/api/team-city', function (req, res) {
+  app.post('/api/team-city', function (req, res) {
     callback('masse data');
     console.log('Team City hit!!');
     console.log(req);
