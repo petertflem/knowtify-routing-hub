@@ -4,3 +4,11 @@ module.exports.curry = function (fn) {
     return fn.apply(this, args.concat([].slice.call(arguments)));
   }
 };
+
+module.exports.loopObejctProperties = function(obj, callback) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      callback(obj[key]);
+    }
+  }
+}

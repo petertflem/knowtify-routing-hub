@@ -1,5 +1,10 @@
+/* Look into ws restore */
+
 var WebSocketServer = require("ws").Server;
-var connections = [];
+var util = require('../util/util');
+
+var connections = { };
+var connectionIdCounter = 0;
 
 module.exports.initialize = function (httpServer) {
   var wss = new WebSocketServer({ server: httpServer });
@@ -7,24 +12,18 @@ module.exports.initialize = function (httpServer) {
   wss.on('connection', function (ws) {
     console.log('client connected');
 
-    connections.push(ws);
-
-    ws.on('ping', function () {
-      console.log('ping');
-    });
+    var wsId = connectionIdCounter++;
+    connections[wsId] = ws;
 
     ws.on('close', function () {
       console.log('connection closed');
-    });
-
-    ws.on('message',function (data) {
-      console.log('MESSAGE:' + data);
+      delete connections[wsId];
     });
   });
 };
 
 module.exports.pipe = function(data) {
-  connections.forEach(function (connection) {
+  util.loopObejctProperties(connections, function (connection) {
     connection.send(data);
   });
 }
