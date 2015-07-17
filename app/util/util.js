@@ -16,3 +16,7 @@ module.exports.loopObejctProperties = function(obj, callback) {
 module.exports.isUndefined = function (obj) {
   return typeof obj === 'undefined';
 };
+
+module.exports.isFunction = function (obj) {
+  return typeof obj === 'function';
+};

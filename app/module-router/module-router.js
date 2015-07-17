@@ -5,44 +5,43 @@ var mapping = require('./config/input-to-notification-map');
 // Map of available notification modules
 var availableNotificationModules = { };
 
-module.exports.initialize = function (app, httpServer) {
-  // Initialize input modules and notification modules
-  initializeInputModules(app);
-  initializeNotificationModules(httpServer);
+module.exports.initialize = function () {
+  fs.readdirSync('app/input_modules/').forEach(initializeInputModule);
+  fs.readdirSync('app/notification_modules/').forEach(initializeNotificationModule);
 };
 
 function mapInputToNotification(inputModuleName, data) {
-  try {
-    getNotificationModules(inputModuleName)
-      .forEach(curry(pipeDataToNotificationModule, data));
-  } catch (e) {
-    console.error(e);
-  }
+  getNotificationModulesForInputModule(inputModuleName)
+    .forEach(util.curry(pipeDataToNotificationModule, data));
 }
 
-function initializeInputModules (app) {
-  fs.readdirSync('app/input_modules/').forEach(function (file) {
-    var moduleName = file.replace('.js', '');
-    var callback = util.curry(mapInputToNotification, moduleName);
+function initializeInputModule (filename) {
+  var moduleName = toModuleName(filename);
+  var callback = util.curry(mapInputToNotification, moduleName);
+  var module = require('../input_modules/' + moduleName);
 
-    require('../input_modules/' + moduleName).initialize(callback, app);
-  });
+  if (util.isFunction(module.initialize))
+    module.initialize(callback);
+  else
+    throw 'Input module \'' + moduleName + '\' doesn\'t have the \'initialize\' function.';
 }
 
-function initializeNotificationModules (httpServer) {
-  fs.readdirSync('app/notification_modules/').forEach(function (file) {
-    var moduleName = file.replace('.js', '');
-    var module = require('../notification_modules/' + moduleName);
+function initializeNotificationModule (filename) {
+  var moduleName = toModuleName(filename);
+  var module = require('../notification_modules/' + moduleName);
 
-    module.initialize(httpServer);
-    availableNotificationModules[moduleName] = module;
-  });
+  if(util.isFunction(module.initialize))
+    module.initialize();
+  else
+    throw 'Notification module \'' + moduleName + '\' doesn\'t have the \'initialize\' function.';
+
+  availableNotificationModules[moduleName] = module;
 }
 
-function getNotificationModules(inputModuleName) {
+function getNotificationModulesForInputModule(inputModuleName) {
   var destinationNotificationModules = mapping[inputModuleName];
 
-  if (util.isUndefined(estinationNotificationModules))
+  if (util.isUndefined(destinationNotificationModules))
     throw 'Input module \'' + inputModuleName + '\' isn\'t in the mapping.';
 
   if (!destinationNotificationModules) // Should this log a warning or blow up?
@@ -58,4 +57,8 @@ function pipeDataToNotificationModule(data, notificationModuleName) {
     throw 'Notification module \'' + notificationModuleName + '\' doesn\'t exist.';
 
   notificationModule.pipe(data);
+}
+
+function toModuleName(filename) {
+  return filename.replace('.js', '');
 }
