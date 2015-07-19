@@ -1,4 +1,6 @@
-module.exports.initialize = function (callback, app) {
+var app = GLOBAL.app;
+
+module.exports.initialize = function (callback) {
   app.post('/api/team-city', function (req, res) {
     callback({"error-code": 1});
     console.log('========Team City hit!!===========');
@@ -7,5 +9,3 @@ module.exports.initialize = function (callback, app) {
     res.sendStatus(200);
   });
 };
-
-/* Handle no connection on notification module */
