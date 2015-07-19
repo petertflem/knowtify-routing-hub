@@ -1,6 +1,6 @@
 module.exports.initialize = function (callback, app) {
   app.post('/api/team-city', function (req, res) {
-    callback('masse data');
+    callback({"error-code": 1});
     console.log('========Team City hit!!===========');
     console.log(req.body);
     console.log('==================================');
