@@ -25,6 +25,6 @@ module.exports.initialize = function () {
 
 module.exports.pipe = function(data) {
   util.loopObejctProperties(connections, function (connection) {
-    connection.send(data);
+    connection.send(JSON.stringify(data));
   });
 }
