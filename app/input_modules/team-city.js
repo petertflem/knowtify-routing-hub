@@ -2,7 +2,7 @@ var app = GLOBAL.app;
 
 module.exports.initialize = function (callback) {
   app.post('/api/team-city', function (req, res) {
-    callback({"error-code": 1});
+    callback(req.body);
     console.log('========Team City hit!!===========');
     console.log(req.body);
     console.log('==================================');
