@@ -1,13 +1,16 @@
 var fs = require('fs');
 var util = require('../util/util');
 var mapping = require('./config/input-to-notification-map');
+var loggy = require('../../git_submodules/loggy');
 
 // Map of available notification modules
 var availableNotificationModules = { };
 
 module.exports.initialize = function () {
+  loggy.info('Initializing router...');
   fs.readdirSync('app/input_modules/').forEach(initializeInputModule);
   fs.readdirSync('app/notification_modules/').forEach(initializeNotificationModule);
+  loggy.info('Router initialized.');
 };
 
 function mapInputToNotification(inputModuleName, data) {

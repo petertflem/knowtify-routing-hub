@@ -1,0 +1,5 @@
+[submodule "git_submodules/loggy"]
+	path = git_submodules/loggy
+	url = https://github.com/petertflem/loggy
+[submodule "loggy"]
+	branch = development
