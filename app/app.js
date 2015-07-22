@@ -13,7 +13,7 @@ GLOBAL.httpServer = server;
 // Configure the logger
 require('../git_submodules/loggy').initialize({
   targetLoggingModules: [{
-    name: 'console',
+    name: 'websocket',
     settings: {
       host: 'ws://localhost:5000',
       keepAlive: true
