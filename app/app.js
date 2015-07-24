@@ -10,15 +10,12 @@ require('./app_config/middleware').initialize(app);
 GLOBAL.app = app;
 GLOBAL.httpServer = server;
 
+module.exports.app = app;
+module.exports.httpServer = httpServer;
+
 // Configure the logger
 require('../git_submodules/loggy').initialize({
-  targetLoggingModules: [{
-    name: 'websocket',
-    settings: {
-      host: 'ws://localhost:5000',
-      keepAlive: true
-    }
-  }]
+  targetLoggingModules: [{ name: 'httppost' }]
 });
 
 // Initialize module router
