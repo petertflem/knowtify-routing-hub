@@ -15,7 +15,16 @@ module.exports.httpServer = httpServer;
 
 // Configure the logger
 require('../git_submodules/loggy').initialize({
-  targetLoggingModules: [{ name: 'httppost' }]
+  targetLoggingModules: [{
+    name: 'httppost',
+    settings: {
+      http: {
+        targetHostname: process.env.LOGGY_TARGET_HOSTNAME || 'localhost',
+        targetPort: process.env.LOGGY_TARGET_POST || '5000',
+        targetPath: process.env.LOGGY_TARGET_PATH || '/api/logs'
+      }
+    }
+  }]
 });
 
 // Initialize module router
