@@ -35,8 +35,6 @@ function initializeNotificationModule (filename) {
 
   if(util.isFunction(module.initialize))
     module.initialize();
-  else
-    throw 'Notification module \'' + moduleName + '\' doesn\'t have the \'initialize\' function.';
 
   availableNotificationModules[moduleName] = module;
 }

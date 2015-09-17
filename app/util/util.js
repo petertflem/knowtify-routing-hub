@@ -5,14 +5,6 @@ module.exports.curry = function (fn) {
   }
 };
 
-module.exports.loopObejctProperties = function(obj, callback) {
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      callback(obj[key]);
-    }
-  }
-}
-
 module.exports.isUndefined = function (obj) {
   return typeof obj === 'undefined';
 };
