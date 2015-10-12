@@ -1,5 +1,2 @@
-module.exports.initialize = function(app) {
-  app.all('*', function (req, res) {
-    res.sendStatus(404);
-  });
-};
+module.exports.initialize = app =>
+  app.all('*', (req, res) => res.sendStatus(404));
