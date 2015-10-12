@@ -1,8 +1,5 @@
-/* Look into ws restore */
-
 var httpServer = GLOBAL.httpServer;
 var WebSocketServer = require("ws").Server;
-var util = require('../util/util');
 var loggy = require('../../git_submodules/loggy');
 var connections = new Map();
 
