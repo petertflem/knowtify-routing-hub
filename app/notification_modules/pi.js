@@ -21,6 +21,6 @@ module.exports.initialize = function () {
 
 module.exports.pipe = function(data) {
   // Extract the needed data from the internal format
-  var piDataFormat = { data: data.status };
+  var piDataFormat = { status: data.status };
   connections.forEach(c => c.send(JSON.stringify(piDataFormat)));
 };
