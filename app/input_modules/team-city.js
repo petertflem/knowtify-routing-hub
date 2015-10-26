@@ -1,4 +1,4 @@
-var app = GLOBAL.app;
+var app = require('../app').app;
 var internalDataFormat = require('../module-router/config/internal-data-format');
 
 module.exports.initialize = function (callback) {

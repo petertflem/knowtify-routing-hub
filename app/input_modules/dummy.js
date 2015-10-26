@@ -1,4 +1,4 @@
-var app = GLOBAL.app;
+var app = require('../app').app;
 
 module.exports.initialize = function (callback) {
   app.post('/api/dummy', function (req, res) {

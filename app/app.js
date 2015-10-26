@@ -7,15 +7,15 @@ var server = require("http").createServer(app);
 require('./app_config/middleware').initialize(app);
 
 // Fix this
-GLOBAL.app = app;
-GLOBAL.httpServer = server;
+//GLOBAL.app = app;
+//GLOBAL.httpServer = server;
 
 module.exports.app = app;
-module.exports.httpServer = httpServer;
+module.exports.httpServer = server;
 
 // Configure the logger
 require('../git_submodules/loggy').initialize({
-  targetLoggingModules: [/*{
+  targetLoggingModules: [{
     name: 'httppost',
     settings: {
       http: {
@@ -24,7 +24,7 @@ require('../git_submodules/loggy').initialize({
         targetPath: process.env.LOGGY_TARGET_PATH || '/api/logs'
       }
     }
-  }*/{ name: 'console' }]
+  }]
 });
 
 // Initialize module router

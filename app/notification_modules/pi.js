@@ -1,4 +1,4 @@
-var httpServer = GLOBAL.httpServer;
+var httpServer = require('../app').httpServer;
 var WebSocketServer = require("ws").Server;
 var loggy = require('../../git_submodules/loggy');
 var connections = new Map();
