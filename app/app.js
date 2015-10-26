@@ -6,10 +6,6 @@ var server = require("http").createServer(app);
 // Initialize middleware
 require('./app_config/middleware').initialize(app);
 
-// Fix this
-//GLOBAL.app = app;
-//GLOBAL.httpServer = server;
-
 module.exports.app = app;
 module.exports.httpServer = server;
 
